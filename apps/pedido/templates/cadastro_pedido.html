@@ -1,0 +1,86 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+{% if notification and msg %}
+<div class="row">
+    <div class="col" style="margin-left: 10px; margin-right: 10px">
+        <div class="alert alert-{{notification}}"><i class="fas fa-bell"></i>
+            {{msg}}
+        </div>
+    </div>
+</div>
+{% endif %}
+<div class="row">
+    <div class="col-md-5">
+        <label for="id-cliente">Selecione o(a) cliente!</label>
+        <select class="form-control" name="cliente" id="id-cliente">
+            <option value="0">---selecione---</option>
+            {% for c in clientes %}
+            <option value="{{ c.pk }}">{{ c.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+</div>
+
+<div class="table-responsive">
+    <table class="table text-center table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Ação</th>
+            <th class="text-center">Produto</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in produtos %}
+        <tr>
+            <td>
+                <div class="button-group">
+                    <button class="btn btn-primary btn-modal btn-sm shadow add-cart" value="{{ p.pk }}" name="{{p.nome}}"><i class="fas fa-cart-plus"></i></button>
+                </div>
+            </td>
+            <td>{{ p.nome }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <button id="stopButton7" class="btn btn-success"> teste som</button>
+</div>
+
+<div class="container-cart" {% if not pk %} hidden {% endif %}>
+    <hr style="border: 2px solid; border-radius: 10px">
+    <span>
+        <i class="fas fa-cart-plus"></i>
+        <strong> - CARRINHO</strong>
+    </span>
+    <div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Ação</th>
+                    <th>Produto</th>
+                    <th>Qtd.</th>
+                    <th>Valor Un. (R$)</th>
+                    <th>Total(R$)</th>
+                </tr>
+                </thead>
+                <tbody class="cart">{{ line|safe }}</tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col text-center">
+            <a class="btn btn-danger btn-prosseguir"> Prosseguir</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/pedido/pedido.js' %}"></script>
+{% endblock %}

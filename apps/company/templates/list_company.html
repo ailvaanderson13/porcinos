@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="panel-body">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">Ação</th>
+                <th class="text-center">R. Social</th>
+                <th class="text-center">N. Fantasia</th>
+                <th class="text-center">CNPJ</th>
+                <th class="text-center">email</th>
+                <th class="text-center">telefone</th>
+                <th class="text-center">data</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for u in companys %}
+            <tr>
+                <td align="center">
+                    <div class="btn-group btn-group-sm shadow" role="group" aria-label="Basic example">
+                        <a href="{% url 'company:edit-company' u.pk %}" class="btn btn-success btn-sm shadow"><i class="fas fa-pencil-alt"></i></a>
+                        <button class="btn btn-danger btn-trash" value="{{ u.pk }}"><i class="fas fa-trash text-white"></i></button>
+                    </div>
+                </td>
+                <td align="center">{{ u.razao_social | truncatewords:2 }}</td>
+                <td align="center">{{ u.nome_fantasia | truncatewords:2 }}</td>
+                <td align="center">{{ u.cnpj }}</td>
+                <td align="center">{{ u.email }}</td>
+                <td align="center">{{ u.telefone }}</td>
+                <td align="center">{{ u.data }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/company/company.js' %}"></script>
+{% endblock %}

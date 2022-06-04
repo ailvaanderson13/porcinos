@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="panel-body">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">Ação</th>
+                <th class="text-center">Código</th>
+                <th class="text-center">Cliente</th>
+                <th class="text-center">Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for u in pedidos %}
+            <tr>
+                <td align="center">
+                    <div class="btn-group btn-group-sm shadow" role="group" aria-label="Basic example">
+                        <a href="{% url 'pedido:edit-pedido' u.pk%}" class="btn btn-success shadow"><i class="fas fa-pencil-alt"></i></a>
+                        <button class="btn btn-primary shadow btn-detail" value="{{u.pk}}"><i class="fas fa-eye"></i></button>
+                    </div>
+                </td>
+                <td align="center">{{ u.codigo }}</td>
+                <td align="center">{{ u.cliente.nome }}</td>
+                <td align="center">{{ u.data }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/pedido/pedido.js' %}"></script>
+{% endblock %}

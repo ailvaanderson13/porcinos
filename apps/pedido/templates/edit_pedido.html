@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+{% if notification and msg %}
+    <div class="row">
+        <div class="col" style="margin-left: 10px; margin-right: 10px">
+            <div class="alert alert-{{notification}}"><i class="fas fa-bell"></i>
+                {{msg}}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/pedido/edit_pedido.js' %}"></script>
+{% endblock %}

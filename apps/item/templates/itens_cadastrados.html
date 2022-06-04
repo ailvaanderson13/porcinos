@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+{% if msg %}
+    <div class="alert {{notification.icon}}"> <i class="fas fa-bell"></i>
+        {{notification.msg}}
+    </div>
+{% else %}
+
+<div class="panel-body">
+    <div class="table-responsive">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">Categoria</span>
+                            <select class="form-control" style="width:500px;" name="select_category">
+                                {% for category in category %}
+                                    <option value="{{category.pk}}">{{category.nome}}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-success">BUSCAR</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">Ação</th>
+                <th class="text-center">Qtd. Estoque</th>
+                <th class="text-center">Cód. de barras</th>
+                <th class="text-center">Categoria</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for u in itens %}
+            <tr>
+                <td align="center">
+                    <div class="btn-group btn-group-sm shadow" role="group" aria-label="Basic example">
+                        <a href="{% url 'item:edit-produto' u.pk %}" class="btn btn-success btn-sm shadow"><i class="fas fa-pencil-alt"></i></a>
+                        <button class="btn btn-danger btn-trash shadow" value="{{u.pk}}"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+                <td align="center">{{ u.quantidade }}</td>
+                <td align="center">{{ u.code_bar }}</td>
+                <td align="center">{{ u.categoria }}</td>
+                <td align="center">{{ u.nome }}</td>
+                <td align="center">{{ u.data }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+<div class="row">
+    <div class="col-md-3 ml-md-auto">
+        <a href="{% url 'item:new-produto' %}" class="btn btn-success">Cadastrar Produtos</a>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/item/item.js' %}"></script>
+{% endblock %}

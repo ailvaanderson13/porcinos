@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="panel-body">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">Ação</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Endereço</th>
+            </tr>
+            </thead>
+            <tbody>
+                
+            {% for store in store %}
+            <tr>
+                <td align="center">
+                    {% if request.user.is_superuser %}
+                        <div class="btn-group btn-group-sm shadow" role="group" aria-label="Basic example">
+                            <a href="{% url 'store:edit-store' store.pk %}" class="btn btn-success"><i class="fas fa-pencil-alt"></i></a> 
+                            <button class="btn btn-danger btn-trash" value="{{ store.pk }}"><i class="fas fa-trash text-white"></i></button>
+                        </div>
+                    {% endif %}
+                </td>
+                <td align="center">{{store.nome|truncatewords:3}}</td>
+                <td align="center">{{store.endereco|truncatewords:4}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nav class="text-center">
+    <ul class="pagination">
+        {% if store.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ store.previous_page_number }}"><i class="fas fa-arrow-left"></i></a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link">
+            <span>
+                {{ store.number }} de {{ store.paginator.num_pages }}
+            </span></a></li>
+        {% if store.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ store.next_page_number }}"><i class="fas fa-arrow-right"></i></a></li>
+        {% endif %}
+    </ul>
+    {% if num %}
+        <div class="text-center">
+            <p><b>{{ num }}</b> resultado(s) encontrado(s)</p>
+        </div>
+    {% endif %}
+</nav>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/store/store.js' %}"></script>
+{% endblock %}

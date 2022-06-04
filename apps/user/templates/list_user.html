@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="panel-body">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">Ação</th>
+                <th class="text-center">Nome</th>
+                <th class="text-center">CPF</th>
+                <th class="text-center">Telefone</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Data</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for u in users %}
+            <tr>
+                <td align="center">
+                    <div class="btn-group btn-group-sm shadow" role="group" aria-label="Basic example">
+                        <a href="{% url 'user:edit-user' u.pk %}" class="btn btn-success btn-sm shadow"><i class="fas fa-pencil-alt"></i></a>
+                        <button class="btn btn-danger btn-trash" value="{{ u.pk }}"><i class="fas fa-trash text-white"></i></button>
+                    </div>
+                </td>
+                <td align="center">{{ u.first_name }}</td>
+                <td align="center">{{ u.cpf }}</td>
+                <td align="center">{{ u.telefone }}</td>
+                <td align="center">{{ u.email }}</td>
+                <td align="center">{{ u.data }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/user/user.js' %}"></script>
+{% endblock %}

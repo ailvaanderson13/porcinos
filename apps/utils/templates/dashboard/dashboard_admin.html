@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fa-arrow-up text-success"></em>
+                <div class="large dash card-1" id_card="1"><i class="fas fa-spinner fa-spin"></i></div>
+                
+                <div class="text-muted">Produtos mais vendidos</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fa-arrow-down text-danger"></em>
+                <div class="large dash card-2" id_card="2"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">Produtos com menos de 10 unidades em estoque</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <a href="{% url 'item:list-produto' %}" style="text-decoration:none">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fas fa-list-ol text-primary"></em>
+                <div class="large dash card-3" id_card="3"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">Itens em estoque</div>
+            </div>
+        </div>
+        </a>
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fa-money-bill-alt text-dark"></em>
+                <div class="large dash card-4" id_card="4"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">Vendas em Dinheiro</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fa-credit-card text-dark"></em>
+                <div class="large dash card-5" id_card="5"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">Crédito/Débito</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fa-rocket text-dark"></em>
+                <div class="large dash card-6" id_card="6"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">PIX</div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fa-money-bill-alt text-success"></em>
+                <div class="large dash card-7" id_card="7"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">Faturamento do dia</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fas fa-money-bill-alt text-warning"></em>
+                <div class="large dash card-8" id_card="8"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">Faturamento nos útimos 30 dias </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <div class="panel panel-teal panel-widget border-right">
+            <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
+                <div class="large dash card-9" id_card="9"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="text-muted">Vendas de Hoje</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/utils/dashboard.js' %}"></script>
+{% endblock %}
