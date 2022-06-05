@@ -44,7 +44,7 @@ class ItemForm(forms.ModelForm):
     )
 
 
-    valor_custo = forms.CharField(
+    valor_custo = forms.FloatField(
         label="VALOR DE CUSTO",
         widget= forms.NumberInput(
             attrs={
@@ -53,7 +53,7 @@ class ItemForm(forms.ModelForm):
         )
     )
 
-    valor_venda = forms.CharField(
+    valor_venda = forms.FloatField(
         label="VALOR DE VENDA",
         widget= forms.NumberInput(
             attrs={
@@ -66,7 +66,7 @@ class ItemForm(forms.ModelForm):
         label="CÓDIGO DE BARRAS",
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control', 'placeholder': 'Insira o Código de barras'
+                'class': 'form-control', 'placeholder': 'Insira o Código de barras (DEVE CONTER NO MÍNIMO 5 DIGITOS!)'
             }
         )
     )

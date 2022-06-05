@@ -27,7 +27,24 @@ function get_code(){
                     }
                 }
             });
-        }
+        } else if(content.length < 5) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'O código deve conter 5 ou mais digitos.'
+            });
+        };
     }
 };
 
@@ -43,6 +60,7 @@ function total_column(){
 
     $('.qtd_line').each(function (){
         qtd_line += 1;
+        $(this).empty().append(qtd_line);
     });
 
     $('.qtd_item').each(function (){
@@ -54,12 +72,12 @@ function total_column(){
     });
 
     $('.val_total').each(function (){
-        subtotal += parseInt($(this).text());
+        subtotal += parseFloat($(this).text());
     });
 
     $('.qtd-line').empty().append(qtd_line);
     $('.qtd-total').empty().append(qtd_total);
-    $('.column_subtotal').empty().append(subtotal);
+    $('.column_subtotal').empty().append(subtotal.toFixed(2).replace('.',','));
 };
 
 $('.btn_finalizar').on('click', function(){
@@ -153,13 +171,22 @@ $(document).on('click', '.btn_trash', function(){
     }).then((result) => {
         if (result.isConfirmed) {
             $(this).parent().parent().parent().remove();
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'item excluido!',
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
                 showConfirmButton: false,
-                timer: 1500
-            })
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'Item excluido com sucesso!'
+            });
             total_column();
         };
         if ($('.cart').is(':empty')){

@@ -214,9 +214,6 @@ def get_product(request):
 
     code = request.POST.get('code', None)
     qtd = request.POST.get('qtd', None)
-
-    qtd_line = 0
-
     if not qtd:
         qtd = 1
     if code:
@@ -224,10 +221,10 @@ def get_product(request):
         if item:
             line = f"""
                 <tr>
-                    <td class="qtd_line">{qtd_line}</td>
+                    <td class="qtd_line font-weight-bold">-</td>
                     <td>{item.nome}</td>
                     <td class="qtd_item">{int(qtd)}</td>
-                    <td class="val_uni">{int(item.valor_venda)}</td>
+                    <td class="val_uni">{float(item.valor_venda)}</td>
                     <td class="val_total">{int(qtd)*item.valor_venda}</td>
                     <td>
                         <div class="button-group">
