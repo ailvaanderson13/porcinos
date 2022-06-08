@@ -22,103 +22,81 @@
 			</a>
 		</li>
 		<hr>
+		{% if request.user.is_superuser %}
 
-		<li class="nav-item">
-			<a data-toggle="collapse" href="#user">
-				<i class="fas fa-users"></i>
-				&nbsp;
-				Usuários
-				<span class="caret"></span>
-			</a>
-			<div class="collapse" id="user">
-				<ul class="nav nav-collapse">
-					<li>
-						<a href="{% url 'user:new-user' %}">
-							<span class="sub-item">Cadastro de Usuários</span>
-						</a>
-					</li>
-					<li>
-						<a href="{% url 'user:list-user' %}">
-							<span class="sub-item">Usuários Cadastrados</span>
-						</a>
-					</li>
-					
-				</ul>
-			</div>
-		</li>
+			<li class="nav-item">
+				<a data-toggle="collapse" href="#user">
+					<i class="fas fa-users"></i>
+					&nbsp;
+					Usuários
+					<span class="caret"></span>
+				</a>
+				<div class="collapse" id="user">
+					<ul class="nav nav-collapse">
+						<li>
+							<a href="{% url 'user:new-user' %}">
+								<span class="sub-item">Cadastro de Usuários</span>
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'user:list-user' %}">
+								<span class="sub-item">Usuários Cadastrados</span>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+			</li>
 
-		<li class="nav-item">
-			<a data-toggle="collapse" href="#permissoes">
-				<i class="fas fa-hashtag"></i>
-				&nbsp;
-				Perfil
-				<span class="caret"></span>
-			</a>
-			<div class="collapse" id="permissoes">
-				<ul class="nav nav-collapse">
-					<li>
-						<a href="#">
-							<span class="sub-item">Cadastro de Perfil</span>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<span class="sub-item">Perfis Cadastrados</span>
-						</a>
-					</li>
-					
-				</ul>
-			</div>
-		</li>
 
-		<li class="nav-item">
-			<a data-toggle="collapse" href="#company">
-				<i class="fas fa-plus"></i>
-				&nbsp;
-				Empresa
-				<span class="caret"></span>
-			</a>
-			<div class="collapse" id="company">
-				<ul class="nav nav-collapse">
-					<li>
-						<a href="{% url 'company:new-company' %}">
-							<span class="sub-item">Nova Empresa</span>
-						</a>
-					</li>
-					<li>
-						<a href="{% url 'company:list-company' %}">
-							<span class="sub-item">Empresas Cadastradas</span>
-						</a>
-					</li>
-					
-				</ul>
-			</div>
-		</li> 
+			<li class="nav-item">
+				<a data-toggle="collapse" href="#company">
+					<i class="fas fa-plus"></i>
+					&nbsp;
+					Empresa
+					<span class="caret"></span>
+				</a>
+				<div class="collapse" id="company">
+					<ul class="nav nav-collapse">
+						<li>
+							<a href="{% url 'company:new-company' %}">
+								<span class="sub-item">Nova Empresa</span>
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'company:list-company' %}">
+								<span class="sub-item">Empresas Cadastradas</span>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+			</li> 
 
-		<li class="nav-item">
-			<a data-toggle="collapse" href="#store">
-				<i class="fas fa-store"></i>
-				&nbsp;
-				Lojas
-				<span class="caret"></span>
-			</a>
-			<div class="collapse" id="store">
-				<ul class="nav nav-collapse">
-					<li>
-						<a href="{% url 'store:new-store' %}">
-							<span class="sub-item">Nova Loja</span>
-						</a>
-					</li>
-					<li>
-						<a href="{% url 'store:list-store' %}">
-							<span class="sub-item">Loja Cadastradas</span>
-						</a>
-					</li>
-					
-				</ul>
-			</div>
-		</li> 
-
+			<li class="nav-item">
+				<a data-toggle="collapse" href="#store">
+					<i class="fas fa-store"></i>
+					&nbsp;
+					Lojas
+					<span class="caret"></span>
+				</a>
+				<div class="collapse" id="store">
+					<ul class="nav nav-collapse">
+						<li>
+							<a href="{% url 'store:new-store' %}">
+								<span class="sub-item">Nova Loja</span>
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'store:list-store' %}">
+								<span class="sub-item">Loja Cadastradas</span>
+							</a>
+						</li>
+						
+					</ul>
+				</div>
+			</li> 
+		{% endif %}
 		<li class="nav-item">
 			<a data-toggle="collapse" href="#cliente">
 				<i class="fa fa-users"></i>

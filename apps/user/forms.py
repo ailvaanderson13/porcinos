@@ -1,7 +1,6 @@
 from django import forms
 from .models import User
 from apps.company.models import Company
-from apps.permissoes.models import Perfil
 
 
 class UserForm(forms.ModelForm):
@@ -41,17 +40,6 @@ class UserForm(forms.ModelForm):
         )
     )
 
-    perfil = forms.ModelChoiceField(
-        required=False,
-        label="PERFIL",
-        queryset=Perfil.objects.filter(is_active=True),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control'
-            }
-        )
-    )
-
     cpf = forms.CharField(
         label='CPF',
         widget=forms.TextInput(
@@ -75,7 +63,7 @@ class UserForm(forms.ModelForm):
         model = User
         exclude = ['is_active', 'is_staff', 'date_joined']
         fields = [
-            'first_name', 'last_name', 'telefone', 'email', 'is_active', 'perfil', 'cpf'
+            'first_name', 'last_name', 'telefone', 'email', 'is_active', 'cpf'
         ]
 
 
@@ -116,17 +104,6 @@ class UserOwnerForm(forms.ModelForm):
         )
     )
 
-    perfil = forms.ModelChoiceField(
-        required=False,
-        label="PERFIL",
-        queryset=Perfil.objects.filter(is_active=True),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control'
-            }
-        )
-    )
-
     cpf = forms.CharField(
         label='CPF',
         widget=forms.TextInput(
@@ -140,7 +117,7 @@ class UserOwnerForm(forms.ModelForm):
         model = User
         exclude = ['is_active', 'is_staff', 'date_joined', 'company']
         fields = [
-            'first_name', 'last_name', 'telefone', 'email', 'is_active', 'perfil', 'cpf'
+            'first_name', 'last_name', 'telefone', 'email', 'is_active', 'cpf'
         ]
 
         

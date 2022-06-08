@@ -5,15 +5,6 @@ from apps.company.models import Company
 
 
 class ItemForm(forms.ModelForm):
-    company = forms.ModelChoiceField(
-        label='EMPRESA',
-        queryset=Company.objects.filter(is_active=True),
-        widget=forms.Select(
-            attrs={
-                'class': 'form-control'
-            }
-        )
-    )
     categoria = forms.ModelChoiceField(
         label='CATEGORIA',
         queryset=Category.objects.filter(is_active=True),
@@ -83,5 +74,5 @@ class ItemForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        fields = ('__all__')
-        exclude = ['is_active', 'loja', 'empty']
+        fields = ['categoria', 'nome', 'quantidade', 'valor_custo', 'valor_venda', 'code_bar', 'descricao']
+        exclude = ['is_active', 'company', 'empty']

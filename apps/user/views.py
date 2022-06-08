@@ -20,7 +20,6 @@ def create_update_user(request, pk=None):
         else:
             msg = 'Nenhum Usuário encontrado!'
             icon = 'alert-warning'
-            print('aqui')
 
     if request.method == 'POST':
         if user:
@@ -31,6 +30,8 @@ def create_update_user(request, pk=None):
             if form.is_valid():
                 form = form.save(commit=False)
                 email = form.email
+                senha = form.telefone
+                form.set_password(senha)
                 form.username = email
                 if user:
                     msg = 'Usuário editado com sucesso!'

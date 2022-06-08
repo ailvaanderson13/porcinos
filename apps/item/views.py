@@ -14,7 +14,7 @@ def create_update_item(request, pk=None):
     icon = None
     form = forms.ItemForm()
     item = None
-    # companay = request.user.companay
+    company = request.user.company if request.user.company else None
 
     if pk:
         item = models.Item.objects.get(pk=pk, is_active=True)
@@ -37,7 +37,7 @@ def create_update_item(request, pk=None):
                 icon = 'alert-success'
             else:
                 new_item = form.save(commit=False)
-                # new_item.loja = loja if loja else None
+                new_item.company = company
                 new_item.save()
                 msg = 'Produto Cadastrado com Sucesso!'
                 icon = 'alert-success'
@@ -61,14 +61,13 @@ def list_item(request):
     notification = None
     itens = None
     icon = None
-    company = request.user.company if request.user.company else None
+    company = request.user.company.pk if request.user.company.pk else None
     category = Category.objects.all()
     select_category = request.POST.get('select_category', None)
 
-
     if company:
         if select_category:
-            itens = models.Item.objects.filter(is_active=True, company=company, pk=int(select_category)).order_by('nome')
+            itens = models.Item.objects.filter(is_active=True, company=company, categoria__pk=int(select_category)).order_by('nome')
         else:
             itens = models.Item.objects.filter(is_active=True, company=company).order_by('nome')
 

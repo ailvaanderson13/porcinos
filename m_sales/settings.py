@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'apps.store',
     'apps.utils',
     'apps.company',
-    'apps.permissoes'
 ]
 
 AUTH_USER_MODEL = "user.User"
