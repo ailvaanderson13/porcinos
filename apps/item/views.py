@@ -61,7 +61,7 @@ def list_item(request):
     notification = None
     itens = None
     icon = None
-    company = request.user.company.pk if request.user.company.pk else None
+    company = request.user.company if request.user.company else None
     category = Category.objects.all()
     select_category = request.POST.get('select_category', None)
 

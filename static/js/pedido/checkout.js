@@ -81,55 +81,62 @@ function total_column(){
 };
 
 $('.btn_finalizar').on('click', function(){
-    Swal.fire({
-        position: 'center',
-        title: 'Detalhes do pedido!',
-        showCancelButton: true,
-        confirmButtonText: 'Finalizar',
-        cancelButtonText: 'Fechar',
-        confirmButtonColor: '#30A5FF',
-        cancelButtonColor: '#F9243F',
-        html:`
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-6 col-md-8 col-lg-12">
-                        <label for="qtd">Quantidade de itens:</label>
-                        <span id="qtd"><h4>#</h4></span>
+    let qtd_itens = $('.qtd-line').text();
+    let subtotal = $('.modal-final').text();
+    if(parseInt(qtd_itens) >=1){
+        Swal.fire({
+            position: 'center',
+            title: 'Detalhes do pedido!',
+            showCancelButton: true,
+            confirmButtonText: 'Finalizar',
+            cancelButtonText: 'Fechar',
+            confirmButtonColor: '#30A5FF',
+            cancelButtonColor: '#F9243F',
+            html:`
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-8 col-lg-12">
+                            <label for="qtd">Quantidade de itens:</label>
+                            <span id="qtd"><h4>${qtd_itens}</h4></span>
 
-                        <label for="valor">Valor total: </label>
-                        <h3 class="text-success soma-total">#</h4>
-                        <br>
+                            <label for="valor">Valor total: </label>
+                            <h3 class="text-success soma-total">${subtotal}</h4>
+                            <br>
 
-                        <label for="pgto">Forma de pagamento</label><br>
-                        <div class="row">
-                            <div class="col-6">
-                                <span>Dinheiro</span>
-                                <input type="number" class="form-control">
-                                <span>Pix</span>
-                                <input type="number" class="form-control">
+                            <label for="pgto">Forma de pagamento</label><br>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span>Dinheiro</span>
+                                    <input type="number" class="form-control">
+                                    <span>Pix</span>
+                                    <input type="number" class="form-control">
+                                </div>
+                                <div class="col-6">
+                                    <span>Débito</span>
+                                    <input type="number" class="form-control">
+                                    <span>Crédito</span>
+                                    <input type="number" class="form-control">
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <span>Débito</span>
-                                <input type="number" class="form-control">
-                                <span>Crédito</span>
-                                <input type="number" class="form-control">
+                            
+                            <div class="pagamento">
+                            <div class="col">
+                                <label>Saldo</label>
+                                <span class="form-control"></span>
                             </div>
                         </div>
-                        
-                        <div class="pagamento">
-
                         </div>
-                    </div>
-                </div><br>
-                <label for="obs">Observação</label>
-                <textarea class="form-control" id="obs" name="obs" id="obs" cols="auto" rows="auto" placeholder="Opcional"></textarea>
-            </div>
-        `
-    }).then((result) =>{
-        if(result.isConfirmed){
-
-        }
-    })
+                    </div><br>
+                    <label for="obs">Observação</label>
+                    <textarea class="form-control" id="obs" name="obs" id="obs" cols="auto" rows="auto" placeholder="Opcional"></textarea>
+                </div>
+            `
+        }).then((result) =>{
+            if(result.isConfirmed){
+                
+            }
+        })
+    }
 });
 
 $('.comeback_dash').on('click', function(){
