@@ -54,6 +54,19 @@ def create_update_item(request, pk=None):
 
     return render(request, 'cadastro_item.html', context)
 
+def menos_itens(request):
+    page_title = 'Produtos com menos de 10 unidades em estoque'
+
+    itens = models.Item.objects.filter(is_active=True, quantidade__range=[0,10])
+
+    resposicao = True
+
+    context = {
+        'page_title': page_title, 'itens': itens, 'resposicao': resposicao
+    }
+
+    return render(request, 'itens_cadastrados.html', context)
+
 
 def list_item(request):
     page_title = 'Produtos Cadastrados'

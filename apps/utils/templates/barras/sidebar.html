@@ -172,7 +172,8 @@
 		</li> 
 
 		<li><a href="{% url 'pedido:list-pedido' %}"><em class="fa fa-clone"></em> Histórico de Pedidos</a></li>
-		<li><a target="blank" href="{% url 'utils:checkout' %}" class="btn btn-primary"><i class="fa fa-plus text-white"></i> Novo Pedido </a></li>
+		<!-- <li><a target="blank" href="{% url 'pedido:new-pedido' %}" class="btn btn-warning"><i class="fa fa-plus text-dark"></i> Checkout cart </a></li> -->
+		<li><a target="blank" href="{% url 'utils:checkout' %}" class="btn btn-primary"><i class="fa fa-plus text-white"></i> Checkout </a></li>
 	</ul>
 </div>
 <!-- <li class="nav-item">

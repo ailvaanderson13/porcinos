@@ -6,6 +6,53 @@ from apps.cliente.models import Cliente
 from apps.item.models import Item
 from apps.utils.function_aux.random import str_generator
 import json
+from django.db.models import Q
+from datetime import datetime
+
+
+def sales_today(request):
+    page_title = 'Vendas do Dia'
+    today = datetime.today().date()
+
+    pedidos = models.Pedido.objects.filter(data__date=today)
+    context = {
+        'page_title': page_title, 'pedidos': pedidos,
+    }
+
+    return render(request, 'pedidos_cadastrados.html', context)
+
+def sales_money(request):
+    page_title = 'Vendas em dinheiro do Dia'
+    today = datetime.today().date()
+
+    pedidos = models.Pedido.objects.filter(data__date=today, dinheiro=True)
+    context = {
+        'page_title': page_title, 'pedidos': pedidos
+    }
+
+    return render(request, 'pedidos_cadastrados.html', context)
+
+def sales_pix(request):
+    page_title = 'Vendas em Pix do Dia'
+    today = datetime.today().date()
+
+    pedidos = models.Pedido.objects.filter(data__date=today, pix=True)
+    context = {
+        'page_title': page_title, 'pedidos': pedidos
+    }
+
+    return render(request, 'pedidos_cadastrados.html', context)
+
+def sales_card(request):
+    page_title = 'Vendas em débito/crédito do Dia'
+    today = datetime.today().date()
+
+    pedidos = models.Pedido.objects.filter(Q(data__date=today, is_active=True, credito=True) | Q(data__date=today, is_active=True, debito=True))
+    context = {
+        'page_title': page_title, 'pedidos': pedidos
+    }
+
+    return render(request, 'pedidos_cadastrados.html', context)
 
 
 @csrf_exempt
@@ -15,38 +62,50 @@ def safe_pedido(request):
     }
     list_pedido = None
     pk_cliente = None
-    forma_pag = None
+    dinheiro = None
+    pix = None
+    debito = None
+    credito = None
     obs = None
     funcionario = request.user
-    loja = request.user.loja
+    usuario = request.user
 
     if request.method == 'POST':
         list_pedido = json.loads(request.POST['list_pedido'])
-        pk_cliente = request.POST.get('id_cliente', None)
-        forma_pag = request.POST.get('forma_pag', None)
+        dinheiro = request.POST.get('dinheiro', False)
+        if dinheiro:
+            dinheiro = True
+        pix = request.POST.get('pix', False)
+        if pix:
+            pix = True
+        debito = request.POST.get('debito', False)
+        if debito:
+            debito = True
+        credito = request.POST.get('credito', False)
+        if credito:
+            credito = True
         obs = request.POST.get('obs', None)
 
-    if list_pedido and pk_cliente:
-        pk_cliente = int(pk_cliente)
-        cod = str_generator().upper()
-        equals = models.Pedido.objects.filter(codigo=cod)
-        while equals:
+        if list_pedido:
             cod = str_generator().upper()
-        cod = f"#{cod}"
+            equals = models.Pedido.objects.filter(codigo=cod)
+            while equals:
+                cod = str_generator().upper()
+            cod = f"#{cod}"
 
-        new_pedido = models.Pedido.objects.create(codigo=cod, employee=funcionario, cliente_id=pk_cliente, loja=loja,
-                                                  forma_pag=forma_pag, obs=obs, detalhes=list_pedido)
+            new_pedido = models.Pedido.objects.create(codigo=cod, usuario=usuario, dinheiro=dinheiro, pix=pix, debito=debito, 
+                                                        credito=credito, obs=obs, detalhes=list_pedido)
+            print(list_pedido)
 
-        for l in list_pedido:
-            if type(l) == dict:
-                for k, v in l.items():
-                    for i in v:
-                        for x in i['id-produto']:
-                            new_pedido.item.add(int(x))
-
-        new_pedido.save()
-
-        response['success'] = True
+            for l in list_pedido:
+                if type(l) == dict:
+                    for k, v in l.items():
+                        cont = 0
+                        for i in v:
+                            new_pedido.item.add(int(v[cont]['id-produto']))
+                            cont += 1
+            new_pedido.save()
+            response['success'] = True
 
     return JsonResponse(response, safe=False)
 
@@ -134,7 +193,7 @@ def list_pedidos(request):
     msg = None
     notification = None
 
-    pedidos = models.Pedido.objects.filter(is_active=True)
+    pedidos = models.Pedido.objects.filter(is_active=True).order_by('-data')
 
     if not pedidos:
         msg = 'Nenhum Pedido Cadastrado!'
@@ -164,7 +223,10 @@ def detail_pedido(request):
 
             if pedido:
                 pedido = pedido.last()
-                pag = pedido.forma_pag
+                dinheiro = pedido.dinheiro
+                pix = pedido.pix
+                debito = pedido.debito
+                credito = pedido.credito
                 obs = pedido.obs
                 detalhes = eval(pedido.detalhes)
 
@@ -183,24 +245,24 @@ def detail_pedido(request):
                                             if kk == 'qtd':
                                                 col3 = f"<td>{vv}</td>"
                                         line += f"<tr>{col1}{col2}{col3}</tr>"
-            if pag == '0':
-                pag = 'Nenhum'
-            elif pag == '1':
-                pag = 'Dinheiro'
-            elif pag == '2':
-                pag = 'Débito'
-            elif pag == '3':
-                pag = 'Crédito'
 
             if obs in [None, '', ' ', 'null']:
                 obs = 'Nenhuma Observação'
 
-            pedido = models.Pedido.objects.filter(pk=pk).values('codigo', 'employee__first_name',
-                                                                'cliente__nome')
+            pedido = models.Pedido.objects.filter(pk=pk).values('codigo', 'usuario__first_name')
             response['obs'] = obs
             response['line'] = line
             response['pedido'] = list(pedido)
-            response['pag'] = str(pag)
+            pgto = []
+            if dinheiro:
+                pgto.append('Dinheiro')
+            if pix:
+                 pgto.append('Pix')
+            if debito:
+                 pgto.append('Debito')
+            if credito:
+                 pgto.append('Crédito')
+            response['pgto'] = pgto
             response['success'] = True
 
     return JsonResponse(response, safe=False)
@@ -220,7 +282,7 @@ def get_product(request):
         item = Item.objects.filter(code_bar=code, is_active=True).last()
         if item:
             line = f"""
-                <tr>
+                <tr class="line" id_line={item.pk}>
                     <td class="qtd_line font-weight-bold">-</td>
                     <td>{item.nome}</td>
                     <td class="qtd_item">{int(qtd)}</td>

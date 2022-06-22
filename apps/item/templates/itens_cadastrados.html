@@ -9,24 +9,26 @@
 
 <div class="panel-body">
     <div class="table-responsive">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <form action="#" method="POST">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">Categoria</span>
-                            <select class="form-control" style="width:500px;" name="select_category">
-                                {% for category in category %}
-                                    <option value="{{category.pk}}">{{category.nome}}</option>
-                                {% endfor %}
-                            </select>
-                            <button type="submit" class="btn btn-success">BUSCAR</button>
-                        </div>
-                    </form>
+        {% if not resposicao %}
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <form action="#" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">Categoria</span>
+                                <select class="form-control" style="width:500px;" name="select_category">
+                                    {% for category in category %}
+                                        <option value="{{category.pk}}">{{category.nome}}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="btn btn-success">BUSCAR</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
 
         <table class="table">

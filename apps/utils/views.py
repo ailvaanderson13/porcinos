@@ -67,7 +67,6 @@ def logout_(request):
 @csrf_exempt
 def load_dashboard(request):
     today = datetime.today()
-    print(today)
     user = request.user 
     response={}
     id = request.GET.get('id_card', None)
@@ -89,14 +88,14 @@ def load_dashboard(request):
             response['info'] = itens
 
         elif id in ['4', 4]:
-            pedidos = Pedido.objects.filter(is_active=True, forma_pag='1').count()
+            pedidos = Pedido.objects.filter(data__date=today.date(), is_active=True, dinheiro=True).count()
             response['info'] = pedidos
 
         elif id in ['5', 5]:
-            pedidos = Pedido.objects.filter(Q(is_active=True, forma_pag='2') | Q(is_active=True, forma_pag='3')).count()
+            pedidos = Pedido.objects.filter(Q(data__date=today.date(), is_active=True, credito=True) | Q(data__date=today.date(), is_active=True, debito=True)).count()
             response['info'] = pedidos
         elif id in ['6', 6]:
-            pedidos = Pedido.objects.filter(is_active=True, forma_pag='4').count()
+            pedidos = Pedido.objects.filter(data__date=today.date(), is_active=True, pix=True).count()
             response['info'] = pedidos
         elif id in ['7', 7]:
             pedidos = Pedido.objects.filter(data=today).count()
@@ -105,8 +104,7 @@ def load_dashboard(request):
             pedidos = Pedido.objects.filter(data=today).count()
             response['info'] = pedidos
         elif id in ['9', 9]:
-            pedidos = Pedido.objects.filter(data=today).count()
-            print(pedidos)
+            pedidos = Pedido.objects.filter(data__date=today.date()).count()
             response['info'] = pedidos
     else:
         pass

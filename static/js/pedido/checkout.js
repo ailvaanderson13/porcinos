@@ -55,8 +55,8 @@ elemento.addEventListener("keypress", get_code);
 function total_column(){
     var qtd_line = 0;
     var qtd_total = 0;
-    var valor_total = 0;
     var subtotal = 0;
+    var valor_total = 0;
 
     $('.qtd_line').each(function (){
         qtd_line += 1;
@@ -107,22 +107,22 @@ $('.btn_finalizar').on('click', function(){
                             <div class="row">
                                 <div class="col-6">
                                     <span>Dinheiro</span>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control payment dinheiro">
                                     <span>Pix</span>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control payment pix">
                                 </div>
                                 <div class="col-6">
                                     <span>Débito</span>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control payment debito">
                                     <span>Crédito</span>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control payment credito">
                                 </div>
                             </div>
                             
                             <div class="pagamento">
                             <div class="col">
                                 <label>Saldo</label>
-                                <span class="form-control"></span>
+                                <span class="form-control text-danger saldo">${subtotal}</span>
                             </div>
                         </div>
                         </div>
@@ -133,11 +133,128 @@ $('.btn_finalizar').on('click', function(){
             `
         }).then((result) =>{
             if(result.isConfirmed){
-                
+                let x = $('.saldo').text().replace(',','.');
+                x = parseFloat(x).toFixed(2);
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+                if(x > 0 ){
+                    Toast.fire({
+                        icon: 'warning',
+                        title: 'O saldo precisa ser quitado!'
+                    });
+                } else if (x < 0){
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'O saldo não pode ser negativo. Revise o valor recebido e tente novamente!'
+                    });
+                } else {
+                    create_json_cart();
+                }
             }
         })
     }
 });
+
+
+function create_json_cart(){
+    list_cart = [];
+    let pedido = {'produtos': []};
+    $('.line').each(function(){
+        let pk_produto = $(this).attr('id_line');
+        let qtd = $(this).children()[2].innerText;  
+        let valor_uni = $(this).children()[3].innerText;
+        let dict_temp = {
+            'id-produto': pk_produto,
+            'qtd': qtd,
+            'valor_uni': valor_uni
+        };
+        pedido['produtos'].push(dict_temp)
+        dict_temp = {};
+    });
+
+    list_cart.push(pedido);
+
+    let obs = $('#obs').val();
+
+    if($('.dinheiro').val()){
+        var dinheiro = true;
+    } else if ($('.pix').val()){
+        var pix = true;
+    } else if($('.debito').val()){
+        var debito = true;
+    } else if ($('.credito').val()){
+        var credito = true;
+    }
+    
+    $.ajax({
+        'url': '/pedido/open-new-pedido/',
+        'dataType': 'json',
+        'method': 'POST',
+        'data': {
+            'list_pedido': JSON.stringify(list_cart),
+            'obs': obs,
+            'dinheiro': dinheiro,
+            'pix': pix, 
+            'debito': debito,
+            'credito': credito,
+        },
+        success: function(data){
+           if (data.success){
+               Swal.fire({
+                   position: 'center',
+                   icon: 'success',
+                   title: 'Pedido Cadastrado com Sucesso!',
+                   allowOutsideClick: false,
+                   allowEscapeKey: false,
+               }).then((result) => {
+                   if (result.value) {
+                       location.reload();
+                   }
+               });
+           } else {
+               Swal.fire({
+                   position: 'center',
+                   icon: 'error',
+                   title: 'Oops...',
+                   text: 'Houve um problema ao salvar seu pedido! Entre em contato com o suporte!',
+                   allowOutsideClick: false,
+                   allowEscapeKey: false,
+               });
+           }
+        }
+    });
+}
+
+function calc_saldo(){
+    var aux = 0;
+    
+    $('.val_uni').each(function (){
+        aux += parseFloat($(this).text());
+    });
+
+    var val = 0;
+    $('.payment').each(function(){
+        if($(this).val() != ''){
+            val += parseFloat($(this).val());
+        };
+    });
+    var total = aux - val;
+    $('.saldo').empty().append(parseFloat(total));
+};
+
+$(document).on('change', '.payment', function(){
+    calc_saldo();
+});
+
 
 $('.comeback_dash').on('click', function(){
     Swal.fire({

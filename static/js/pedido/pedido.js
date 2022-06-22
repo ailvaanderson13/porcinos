@@ -1,40 +1,3 @@
-function beep(){
-    const stopButton7 = document.querySelector('add-cart');
-  
-const b4 = 493.9;
-
-  	
-let context,
-	oscillator,
-  contextGain,
-  x = 1,
-  type = 'sine',
-  frequency;
-
-function start(){
-	context = new AudioContext();
-	oscillator = context.createOscillator();
-    contextGain = context.createGain();
-    oscillator.frequency.value = frequency;
-    oscillator.type = type;
-    oscillator.connect(contextGain);
-	contextGain.connect(context.destination);
-	oscillator.start(0);
-}
-
-function stop(){
-  start();
-  contextGain.gain.exponentialRampToValueAtTime(
-  	0.00001, context.currentTime + x
-	)
-}
-
-stopButton7.addEventListener('click', function(){
-	frequency = b4;
-  stop();
-});
-}
-
 let produtos = [];
 $('.add-cart').on('click', function(){
     let pk_cliente = $('#id-cliente').val();
@@ -365,14 +328,11 @@ $('.btn-detail').on('click', function(){
                                     <label for="codigo">Código: </label>
                                     <span class="text-danger" id="codigo"><b>${data['pedido'][0]['codigo']}</b></span><br>
 
-                                    <label for="cliente">Cliente: </label>
-                                    <span id="cliente">${data['pedido'][0]['cliente__nome']}</span><br>
-
                                     <label for="cliente">Usuário </label>
-                                    <span id="cliente">${data['pedido'][0]['employee__first_name']}</span><br>
+                                    <span id="cliente">${data['pedido'][0]['usuario__first_name']}</span><br>
 
                                     <label for="pgto">Forma de Pag.: </label>
-                                    <span id="pgto">${data['pag']}</span><br>
+                                    <span id="pgto">${data['pgto']}</span><br>
 
                                     <label for="obs">Observação: </label>
                                     <span id="obs">${data['obs']}</span>
@@ -385,41 +345,3 @@ $('.btn-detail').on('click', function(){
         })
     }
 });
-
-    // inicio
-    const stopButton7 = document.querySelector('#stopButton7');
-          
-    const b4 = 493.9;
-    // const b4 = 466.2;
-    // const b4 = 493.9;
-    
-          
-    let context,
-    oscillator,
-    contextGain,
-    xy = 1,
-    type = 'triangle',
-    frequency;
-    
-    function start(){
-        context = new AudioContext();
-        oscillator = context.createOscillator();
-        contextGain = context.createGain();
-        oscillator.frequency.value = frequency;
-        oscillator.type = type;
-        oscillator.connect(contextGain);
-        contextGain.connect(context.destination);
-        oscillator.start(0);
-    }
-    
-    function stop(){
-      start();
-      contextGain.gain.exponentialRampToValueAtTime(
-          0.00001, context.currentTime + xy
-        )
-    }
-    
-    stopButton7.addEventListener('click', function(){
-        frequency = b4;
-      stop();
-    });

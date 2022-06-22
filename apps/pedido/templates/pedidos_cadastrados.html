@@ -9,7 +9,7 @@
             <tr>
                 <th class="text-center">Ação</th>
                 <th class="text-center">Código</th>
-                <th class="text-center">Cliente</th>
+                <th class="text-center">Usuário</th>
                 <th class="text-center">Data</th>
             </tr>
             </thead>
@@ -18,12 +18,11 @@
             <tr>
                 <td align="center">
                     <div class="btn-group btn-group-sm shadow" role="group" aria-label="Basic example">
-                        <a href="{% url 'pedido:edit-pedido' u.pk%}" class="btn btn-success shadow"><i class="fas fa-pencil-alt"></i></a>
                         <button class="btn btn-primary shadow btn-detail" value="{{u.pk}}"><i class="fas fa-eye"></i></button>
                     </div>
                 </td>
                 <td align="center">{{ u.codigo }}</td>
-                <td align="center">{{ u.cliente.nome }}</td>
+                <td align="center">{{ u.usuario.first_name }}</td>
                 <td align="center">{{ u.data }}</td>
             </tr>
             {% endfor %}

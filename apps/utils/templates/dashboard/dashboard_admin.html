@@ -12,21 +12,23 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
+        <a href="{% url 'item:reposicao-produto' %}" style="text-decoration:none">
         <div class="panel panel-teal panel-widget border-right">
             <div class="row no-padding"><em class="fa fa-xl fas fa-arrow-down text-danger"></em>
                 <div class="large dash card-2" id_card="2"><i class="fas fa-spinner fa-spin"></i></div>
                 <div class="text-muted">Produtos com menos de 10 unidades em estoque</div>
             </div>
         </div>
+        </a>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
         <a href="{% url 'item:list-produto' %}" style="text-decoration:none">
-        <div class="panel panel-teal panel-widget border-right">
-            <div class="row no-padding"><em class="fa fa-xl fas fas fa-list-ol text-primary"></em>
-                <div class="large dash card-3" id_card="3"><i class="fas fa-spinner fa-spin"></i></div>
-                <div class="text-muted">Itens em estoque</div>
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding"><em class="fa fa-xl fas fas fa-list-ol text-primary"></em>
+                    <div class="large dash card-3" id_card="3"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="text-muted">Itens em estoque</div>
+                </div>
             </div>
-        </div>
         </a>
     </div>
 </div>
@@ -34,28 +36,34 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
-        <div class="panel panel-teal panel-widget border-right">
-            <div class="row no-padding"><em class="fa fa-xl fas fa-money-bill-alt text-dark"></em>
-                <div class="large dash card-4" id_card="4"><i class="fas fa-spinner fa-spin"></i></div>
-                <div class="text-muted">Vendas em Dinheiro</div>
+        <a href="{% url 'pedido:sales-money' %}" style="text-decoration:none">
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding"><em class="fa fa-xl fas fa-money-bill-alt text-dark"></em>
+                    <div class="large dash card-4" id_card="4"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="text-muted">Vendas em Dinheiro (hoje)</div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
-        <div class="panel panel-teal panel-widget border-right">
-            <div class="row no-padding"><em class="fa fa-xl fas fa-credit-card text-dark"></em>
-                <div class="large dash card-5" id_card="5"><i class="fas fa-spinner fa-spin"></i></div>
-                <div class="text-muted">Crédito/Débito</div>
+        <a href="{% url 'pedido:sales-card' %}" style="text-decoration:none">
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding"><em class="fa fa-xl fas fa-credit-card text-dark"></em>
+                    <div class="large dash card-5" id_card="5"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="text-muted">Crédito/Débito (hoje)</div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
-        <div class="panel panel-teal panel-widget border-right">
-            <div class="row no-padding"><em class="fa fa-xl fas fa-rocket text-dark"></em>
-                <div class="large dash card-6" id_card="6"><i class="fas fa-spinner fa-spin"></i></div>
-                <div class="text-muted">PIX</div>
+        <a href="{% url 'pedido:sales-pix' %}" style="text-decoration:none">
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding"><em class="fa fa-xl fas fa-rocket text-dark"></em>
+                    <div class="large dash card-6" id_card="6"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="text-muted">PIX (hoje)</div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 <hr>
@@ -77,12 +85,14 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-4 no-padding">
-        <div class="panel panel-teal panel-widget border-right">
-            <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
-                <div class="large dash card-9" id_card="9"><i class="fas fa-spinner fa-spin"></i></div>
-                <div class="text-muted">Vendas de Hoje</div>
+        <a href="{% url 'pedido:sales-today' %}" style="text-decoration:none">
+            <div class="panel panel-teal panel-widget border-right">
+                <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
+                    <div class="large dash card-9" id_card="9"><i class="fas fa-spinner fa-spin"></i></div>
+                    <div class="text-muted">Vendas de Hoje</div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 
